@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All People</title>
+    <style>
+        body {
+            font-family: "Poppins", sans-serif;
+            background: linear-gradient(135deg, #f0f9ff, #e3f2fd);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            width: 400px;
+        }
+        h1 {
+            color: #1976d2;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            background: #e3f2fd;
+            margin: 8px 0;
+            padding: 10px;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+        li:hover {
+            background: #bbdefb;
+            transform: scale(1.03);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>All People</h1>
+        <ul>
+            {% for people in people %}
+                <li>Name: {{ people.name }} — Age: {{ people.age }}</li>
+            {% empty %}
+                <li>No people found.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
