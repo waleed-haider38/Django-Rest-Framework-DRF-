@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from rest_framework.views import APIView #type: ignore
 from rest_framework.response import Response #type: ignore
+from .models import Person
+from .serializer import PersonSerializer
 
 
 # Create your views here.
@@ -32,4 +34,18 @@ class UserAPI(APIView):
             'message': 'User data received successfully!'
         }
         return Response(data)
+
+class PersonAPI(APIView):
+    def get(self, request):
+        persons = Person.objects.all()
+        serializer = PersonSerializer(persons, many=True)
+        return Response(serializer.data)
+    def post(self, request):
+        serializer = PersonSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)
+    
+    
     
