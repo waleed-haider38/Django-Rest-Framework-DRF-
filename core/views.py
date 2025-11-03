@@ -47,5 +47,8 @@ class PersonAPI(APIView):
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
     
-    
+
+def person_list(request):
+    persons = Person.objects.all()
+    return render(request, 'person_list.html', {'persons': persons})
     
