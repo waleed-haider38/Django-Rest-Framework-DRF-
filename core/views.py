@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework.views import APIView #type: ignore
 from rest_framework.response import Response #type: ignore
 from .models import Person, People
-from .serializer import PersonSerializer
+from .serializer import PersonSerializer , PeopleSerializer
 
 
 # Create your views here.
@@ -56,11 +56,11 @@ def person_list(request):
 
 class PeopleAPI(APIView):
     def get(self, request):
-        person = Person.objects.all()
-        serializer = PersonSerializer(person, many=True)
+        person = People.objects.all()
+        serializer = PeopleSerializer(person, many=True)
         return Response(serializer.data)
     def post(self, request):
-        serializer = PersonSerializer(data=request.data)
+        serializer = PeopleSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=201)

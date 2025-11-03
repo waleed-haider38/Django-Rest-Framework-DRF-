@@ -8,5 +8,5 @@ class PersonSerializer(serializers.ModelSerializer):
 
 class PeopleSerializer(serializers.ModelSerializer):
     class Meta:
-        model:People
+        model = People
         fields= '__all__'
