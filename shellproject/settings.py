@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'item',
     'rest_framework',  # Added for DRF
     'core',
     'django.contrib.admin',
