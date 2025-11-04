@@ -1,1 +1,1 @@
-This repo is focusing on testing the APIViewn , GenericViewn and ViewSet like how they work , how they are different from each other etc.
+This repo is focusing on testing the APIView , GenericView and ViewSet like how they work , how they are different from each other etc.
