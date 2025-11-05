@@ -17,9 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from rest_framework.routers import DefaultRouter
-from myapp.views import UserView
+from myapp.views import UserView , Count
 router = DefaultRouter()
 router.register(r'users', UserView, basename='user')
+router.register(r'count', Count, basename='count')
 
 
 urlpatterns = [
