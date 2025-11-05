@@ -16,11 +16,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+from rest_framework.routers import DefaultRouter
+from myapp.views import UserView
+router = DefaultRouter()
+router.register(r'users', UserView, basename='user')
+
 
 urlpatterns = [
+    
     path('admin/', admin.site.urls),
     path('', include('core.urls')),
     path('api-auth/', include('rest_framework.urls')),  # Added for DRF browsable API login
     path('item/',include('item.urls')),
-    path('myapp/', include('myapp.urls')),
+    path('myapp/', include(router.urls)),
 ]
