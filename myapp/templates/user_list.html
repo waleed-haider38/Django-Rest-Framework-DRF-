@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User List</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .user-list {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px 30px;
+        }
+
+        .user-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .user-item:last-child {
+            border-bottom: none;
+        }
+
+        .username {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .description {
+            color: #555;
+            font-size: 0.95em;
+        }
+    </style>
+</head>
+<body>
+    <h1>User List</h1>
+
+    <div class="user-list">
+        {% for user in users %}
+            <div class="user-item">
+                <p class="username">{{ user.username }}</p>
+                <p class="description">{{ user.description }}</p>
+                <p class="description">{{ user.power }}</p>
+            </div>
+        {% empty %}
+            <p>No users found.</p>
+        {% endfor %}
+    </div>
+</body>
+</html>
