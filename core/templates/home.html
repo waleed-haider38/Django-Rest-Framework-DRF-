@@ -4,55 +4,67 @@
   <meta charset="UTF-8">
   <title>Welcome Home</title>
   <style>
-    body {
+    /* General reset */
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
       font-family: "Poppins", sans-serif;
-      background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); /* dark gradient */
+      color: #f0f0f0;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       height: 100vh;
+      text-align: center;
     }
 
     h1 {
-      font-size: 48px;
-      color: #2e7d32;
-      font-family: "Courier New", monospace;
-      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
-      margin-bottom: 40px;
-      letter-spacing: 1px;
-      text-align: center;
+      font-size: 52px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: #76c7c0;
+      margin-bottom: 50px;
+      text-shadow: 0 0 10px rgba(118, 199, 192, 0.4);
     }
 
     .link-container {
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 18px;
     }
 
     a {
-      font-size: 20px;
+      font-size: 18px;
       text-decoration: none;
-      color: white;
-      background-color: #1976d2;
-      padding: 12px 28px;
-      border-radius: 8px;
+      color: #fff;
+      background: linear-gradient(90deg, #1e3c72, #2a5298);
+      padding: 14px 32px;
+      border-radius: 10px;
       transition: all 0.3s ease;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     }
 
     a:hover {
-      background-color: #0d47a1;
-      transform: scale(1.05);
+      background: linear-gradient(90deg, #2a5298, #1e3c72);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.5);
     }
 
     footer {
       position: absolute;
       bottom: 20px;
       font-size: 14px;
-      color: #555;
+      color: #aaa;
+      letter-spacing: 0.5px;
+    }
+
+    footer span {
+      color: #76c7c0;
     }
   </style>
 </head>
@@ -64,8 +76,9 @@
     <a href="{% url 'user-api' %}">Go to User API</a>
     <a href="{% url 'person-api' %}">Go to Person API</a>
     <a href="{% url 'people-api' %}">Go to People API</a>
+    <a href="{% url 'element-api' %}">Go to Element API</a>
   </div>
 
-  <footer>Powered by Django REST Framework 💡</footer>
+  <footer>Powered by <span>Django REST Framework ⚡</span></footer>
 </body>
 </html>
