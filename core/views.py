@@ -73,6 +73,7 @@ def people_list(request):
     people = People.objects.all()
     return render(request, 'people_list.html', {'people': people})
     
+#Here I write the code related to element where I can do get , post , put & patch(update) and delete request
 class ElementAPI(APIView):
     def get(self , request):
         elements = Element.objects.all()
@@ -95,7 +96,7 @@ class ElementDetailAPIView(APIView):
         serializer = ElementSerializer(element , data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response({'message':'Element Updated Successfully','data':serializer.data},status = status.HTTP_200_ok)
+            return Response({'message':'Element Updated Successfully','data':serializer.data},status = status.HTTP_200_OK)
         return Response(serializer.errors , status=status.HTTP_400_BAD_REQUEST)
     def patch(self, request, pk):
         element = get_object_or_404(Element, pk=pk)
@@ -110,14 +111,39 @@ class ElementDetailAPIView(APIView):
         element.delete()
         return Response({'message':'Element Deleted Successfully'},status=status.HTTP_204_NO_CONTENT)                          
 
+#Subject API here I have write the code where I can get , post , put , patch (update) and delete my subject data
 class SubjectAPI(APIView):
     def get(self , request):
         subject = Subject.objects.all()
         serializer = SubjectSerializer(subject , many=True)
         return Response(serializer.data)
     def post(self , request):
-        serializer = SubjectSerializer(data=request.data)
+        serializer = SubjectSerializer(data=request.data , many=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data , status=201)
         return Response(serializer.errors , status=400)
+    
+class SubjectDetailAPI(APIView):
+    def get(self , request, pk):
+        subject = get_object_or_404(Subject, pk=pk)
+        serializer = SubjectSerializer(subject)
+        return Response(serializer.data)
+    def put(self , request, pk):
+        subject = get_object_or_404(Subject , pk=pk)
+        serializer = SubjectSerializer(subject ,data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'message':'Subject Updated Successfully!','data':serializer.data}, status=status.HTTP_200_OK)
+        return Response({'message':'Bad Request!'}, status=status.HTTP_400_BAD_REQUEST)
+    def patch(self, request,pk):
+        subject = get_object_or_404(Subject, pk=pk)
+        serializer = SubjectSerializer(subject, data=request.data , partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'message':'Subject Partial Updated Successfully!','data':serializer.data},status=status.HTTP_200_OK)
+        return Response({'message':'Bad Request'},status=status.HTTP_400_BAD_REQUEST)
+    def delete(self,request,pk):
+        subject = get_object_or_404(Subject , pk=pk)
+        subject.delete()
+        return Response({'message':'Subject Data Deleted Successfully'},status=status.HTTP_204_NO_CONTENT)

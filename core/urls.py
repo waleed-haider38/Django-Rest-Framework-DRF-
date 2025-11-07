@@ -11,6 +11,7 @@ urlpatterns = [
     path('people/', views.people_list, name='people-list'),
     path('api/element/', views.ElementAPI.as_view(), name='element-api'),
     path('api/element/<int:pk>/', views.ElementDetailAPIView.as_view(), name='element-detail'),
-    path('api/subject', views.SubjectAPI.as_view(), name='subject-api')
+    path('api/subject', views.SubjectAPI.as_view(), name='subject-api'),
+    path('api/subject/<int:pk>/', views.SubjectDetailAPI.as_view(), name='subject-api')
 
 ]
