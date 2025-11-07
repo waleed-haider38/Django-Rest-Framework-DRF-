@@ -46,3 +46,11 @@ class Element(models.Model):
 
     def __str__(self):
         return self.element_name
+
+class Subject(models.Model):
+    subject_name = models.CharField(max_length=100)
+    subject_marks = models.IntegerField()
+    subject_detail = models.TextField()
+
+    def __str__(self):
+        return self.subject_name
