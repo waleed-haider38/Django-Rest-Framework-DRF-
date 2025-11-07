@@ -2,6 +2,8 @@ from django.shortcuts import render
 from rest_framework.views import APIView #type: ignore
 from rest_framework.response import Response #type: ignore
 from .models import Person, People, Element
+from rest_framework import status
+from django.shortcuts import get_object_or_404
 from .serializer import PersonSerializer , PeopleSerializer, ElementSerializer
 
 
@@ -83,3 +85,27 @@ class ElementAPI(APIView):
             return Response(serializer.data , status=201)
         return Response(serializer.errors , status=400)
     
+class ElementDetailAPIView(APIView):
+    def get(self, request, pk):
+        element = get_object_or_404(Element , pk=pk)
+        serializer = ElementSerializer(element)
+        return Response(serializer.data)
+    def put(self , request, pk):
+        element = get_object_or_404(Element , pk=pk)
+        serializer = ElementSerializer(element , data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'message':'Element Updated Successfully','data':serializer.data},status = status.HTTP_200_ok)
+        return Response(serializer.errors , status=status.HTTP_400_BAD_REQUEST)
+    def patch(self, request, pk):
+        element = get_object_or_404(Element, pk=pk)
+        serializer = ElementSerializer(element , data=request.data , partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'message':'Element Partially Updated!','data':serializer.data},
+                            status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def delete(self , request , pk):
+        element = get_object_or_404(Element, pk=pk)
+        element.delete()
+        return Response({'message':'Element Deleted Successfully'},status=status.HTTP_204_NO_CONTENT)                          
