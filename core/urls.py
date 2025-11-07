@@ -9,5 +9,6 @@ urlpatterns = [
     path('api/people/', views.PeopleAPI.as_view(), name='people-api'),
     path('persons/', views.person_list, name='person-list'),
     path('people/', views.people_list, name='people-list'),
+    path('api/element/', views.ElementAPI.as_view(), name='element-api')
 
 ]

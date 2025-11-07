@@ -38,3 +38,11 @@ class People(models.Model):
 
     def __str__(self):
         return self.name
+    
+class Element(models.Model):
+    element_name = models.CharField(max_length=100)
+    element_formula = models.CharField(max_length=1000)
+    element_description = models.TextField()
+
+    def __str__(self):
+        return self.element_name
