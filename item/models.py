@@ -10,3 +10,10 @@ class Item(models.Model):
     def __str__(self):
         return self.name
     
+class Animal(models.Model):
+    animal_name = models.CharField(max_length=100)
+    animal_quality = models.CharField(max_length=100)
+    animal_description = models.TextField()
+
+    def __str__(self):
+        return self.animal_name
