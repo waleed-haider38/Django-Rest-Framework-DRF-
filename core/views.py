@@ -111,7 +111,7 @@ class ElementDetailAPIView(APIView):
         element.delete()
         return Response({'message':'Element Deleted Successfully'},status=status.HTTP_204_NO_CONTENT)                          
 
-#Subject API here I have write the code where I can get , post , put , patch (update) and delete my subject data
+#Subject API here I have write the code where I can --> get , post , put , patch (update) and delete my subject data
 class SubjectAPI(APIView):
     def get(self , request):
         subject = Subject.objects.all()
