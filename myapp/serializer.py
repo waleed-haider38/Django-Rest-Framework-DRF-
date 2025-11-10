@@ -4,8 +4,8 @@ from .models import User , Count, Tree
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = '__all__'
-
+        # fields = '__all__'
+        fields = ['id','username','description','power']
 
 class CountSerializer(serializers.ModelSerializer):
     class Meta:
