@@ -1,10 +1,10 @@
 from django.shortcuts import render
 from rest_framework.views import APIView #type: ignore
 from rest_framework.response import Response #type: ignore
-from .models import Person, People, Element, Subject
+from .models import Person, People, Element, Subject, School
 from rest_framework import status
 from django.shortcuts import get_object_or_404
-from .serializer import PersonSerializer , PeopleSerializer, ElementSerializer,SubjectSerializer
+from .serializer import PersonSerializer , PeopleSerializer, ElementSerializer,SubjectSerializer,SchoolSerializer
 
 
 # Create your views here.
@@ -147,3 +147,43 @@ class SubjectDetailAPI(APIView):
         subject = get_object_or_404(Subject , pk=pk)
         subject.delete()
         return Response({'message':'Subject Data Deleted Successfully'},status=status.HTTP_204_NO_CONTENT)
+    
+#Now making School api where I am going to make some API's so lets do it
+
+class SchoolAPI(APIView):
+    def get(self , request):
+        school = School.objects.all()
+        serializer = SchoolSerializer(school, many=True)
+        return Response(serializer.data)
+    def post(self , request):
+        serializer = SchoolSerializer(data=request.data, many=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data , status=201)
+        return Response(serializer.errors , status=400)
+    
+class SchoolDetailAPI(APIView):
+    def get(self , request ,pk):
+        school = get_object_or_404(School , pk=pk)
+        serializer = SchoolSerializer(school)
+        return Response(serializer.data)
+    #Put method will update the all field of school data we cannot update a single field in put method
+    def put(self , request , pk):
+        school = get_object_or_404(School , pk=pk)
+        serializer = SchoolSerializer(school , data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'message':'School Updated Successfully', 'data':serializer.data},status=status.HTTP_200_OK)
+        return Response({'message':'Bad Request'},status=status.HTTP_400_BAD_REQUEST)
+    #Patch method helps us to update single field of data.
+    def patch(self , request ,pk):
+        school = get_object_or_404(School , pk=pk)
+        serializer = SchoolSerializer(school , data=request.data , partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'message':'School Field Data Updated Successfully!','data':serializer.data},status=status.HTTP_200_OK)
+        return Response({'message':'Bad Request'},status=status.HTTP_400_BAD_REQUEST)
+    def delete(self , request, pk):
+        school = get_object_or_404(School , pk=pk)
+        school.delete()
+        return Response({'message':'School Data Deleted Successfully!'},status=status.HTTP_204_NO_CONTENT)

@@ -54,3 +54,12 @@ class Subject(models.Model):
 
     def __str__(self):
         return self.subject_name
+    
+class School(models.Model):
+    school_name = models.CharField(max_length=1000)
+    school_branch = models.CharField(max_length=1200)
+    school_detail = models.TextField()
+
+    def __str__(self):
+        return self.school_name
+    
