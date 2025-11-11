@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual Environments
+venv/
+.env/
+.env
+
+# Poetry
+poetry.lock
+.pyproject.toml
+
+# Django
+*.log
+media/
+staticfiles/
+db.sqlite3
+
+# Docker
+*.pid
+*.sock
+.dockerignore
+Dockerfile
+docker-compose.yml
+
+# Node / Frontend (optional)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Migrations (optional, if auto-generated in dev)
+*/migrations/__pycache__/
