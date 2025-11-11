@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # Create your models here.
 class User(models.Model):
     username = models.CharField(max_length=150)
@@ -8,7 +9,8 @@ class User(models.Model):
 
     def __str__(self):
         return self.username
-    
+
+
 class Count(models.Model):
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=250)
@@ -16,7 +18,8 @@ class Count(models.Model):
 
     def __str__(self):
         return self.name
-    
+
+
 class Tree(models.Model):
     tree_name = models.CharField(max_length=150)
     fruit_name = models.CharField(max_length=100)

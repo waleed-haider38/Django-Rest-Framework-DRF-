@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 
+
 class Item(models.Model):
     name = models.CharField(max_length=100)
     detail = models.CharField(max_length=255)
@@ -9,7 +10,8 @@ class Item(models.Model):
 
     def __str__(self):
         return self.name
-    
+
+
 class Animal(models.Model):
     animal_name = models.CharField(max_length=100)
     animal_quality = models.CharField(max_length=100)

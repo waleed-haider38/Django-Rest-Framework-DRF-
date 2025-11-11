@@ -1,47 +1,54 @@
 from django.shortcuts import render
-from rest_framework.views import APIView #type: ignore
-from rest_framework.response import Response #type: ignore
+from rest_framework.views import APIView  # type: ignore
+from rest_framework.response import Response  # type: ignore
 from .models import Person, People, Element, Subject, School
 from rest_framework import status
 from django.shortcuts import get_object_or_404
-from .serializer import PersonSerializer , PeopleSerializer, ElementSerializer,SubjectSerializer,SchoolSerializer
+from .serializer import (
+    PersonSerializer,
+    PeopleSerializer,
+    ElementSerializer,
+    SubjectSerializer,
+    SchoolSerializer,
+)
 
 
 # Create your views here.
 def home(request):
-    return render(request, 'home.html')
+    return render(request, "home.html")
+
 
 class TestAPI(APIView):
     def get(self, request):
         data = {
-            'message': 'Assalam-o-Alaikum! Kia hal ha? Mera name Muhammad Waleed Haider ha'
+            "message": "Assalam-o-Alaikum! Kia hal ha? Mera name Muhammad Waleed Haider ha"
         }
         return Response(data)
 
     def post(self, request):
-        data = {
-            'message': 'Hello, this is a POST request!'
-        }
+        data = {"message": "Hello, this is a POST request!"}
         return Response(data)
-    
+
+
 class UserAPI(APIView):
     def get(self, request):
         data = {
-            'name': 'Muhammad Waleed Haider',
-            'email': 'waleed@haidergmail.com',
+            "name": "Muhammad Waleed Haider",
+            "email": "waleed@haidergmail.com",
         }
         return Response(data)
+
     def post(self, request):
-        data = {
-            'message': 'User data received successfully!'
-        }
+        data = {"message": "User data received successfully!"}
         return Response(data)
+
 
 class PersonAPI(APIView):
     def get(self, request):
         persons = Person.objects.all()
         serializer = PersonSerializer(persons, many=True)
         return Response(serializer.data)
+
     def post(self, request):
         serializer = PersonSerializer(data=request.data)
         if serializer.is_valid():
@@ -50,17 +57,17 @@ class PersonAPI(APIView):
         return Response(serializer.errors, status=400)
 
 
-    
-
 def person_list(request):
     persons = Person.objects.all()
-    return render(request, 'person_list.html', {'persons': persons})
+    return render(request, "person_list.html", {"persons": persons})
+
 
 class PeopleAPI(APIView):
     def get(self, request):
         person = People.objects.all()
         serializer = PeopleSerializer(person, many=True)
         return Response(serializer.data)
+
     def post(self, request):
         serializer = PeopleSerializer(data=request.data)
         if serializer.is_valid():
@@ -71,119 +78,170 @@ class PeopleAPI(APIView):
 
 def people_list(request):
     people = People.objects.all()
-    return render(request, 'people_list.html', {'people': people})
-    
-#Here I write the code related to element where I can do get , post , put & patch(update) and delete request
+    return render(request, "people_list.html", {"people": people})
+
+
+# Here I write the code related to element where I can do get , post , put & patch(update) and delete request
 class ElementAPI(APIView):
-    def get(self , request):
+    def get(self, request):
         elements = Element.objects.all()
         serializer = ElementSerializer(elements, many=True)
         return Response(serializer.data)
+
     def post(self, request):
         serializer = ElementSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data , status=201)
-        return Response(serializer.errors , status=400)
-    
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)
+
+
 class ElementDetailAPIView(APIView):
     def get(self, request, pk):
-        element = get_object_or_404(Element , pk=pk)
+        element = get_object_or_404(Element, pk=pk)
         serializer = ElementSerializer(element)
         return Response(serializer.data)
-    def put(self , request, pk):
-        element = get_object_or_404(Element , pk=pk)
-        serializer = ElementSerializer(element , data=request.data)
+
+    def put(self, request, pk):
+        element = get_object_or_404(Element, pk=pk)
+        serializer = ElementSerializer(element, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response({'message':'Element Updated Successfully','data':serializer.data},status = status.HTTP_200_OK)
-        return Response(serializer.errors , status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"message": "Element Updated Successfully", "data": serializer.data},
+                status=status.HTTP_200_OK,
+            )
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
     def patch(self, request, pk):
         element = get_object_or_404(Element, pk=pk)
-        serializer = ElementSerializer(element , data=request.data , partial=True)
+        serializer = ElementSerializer(element, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
-            return Response({'message':'Element Partially Updated!','data':serializer.data},
-                            status=status.HTTP_200_OK)
+            return Response(
+                {"message": "Element Partially Updated!", "data": serializer.data},
+                status=status.HTTP_200_OK,
+            )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    def delete(self , request , pk):
+
+    def delete(self, request, pk):
         element = get_object_or_404(Element, pk=pk)
         element.delete()
-        return Response({'message':'Element Deleted Successfully'},status=status.HTTP_204_NO_CONTENT)                          
+        return Response(
+            {"message": "Element Deleted Successfully"},
+            status=status.HTTP_204_NO_CONTENT,
+        )
 
-#Subject API here I have write the code where I can --> get , post , put , patch (update) and delete my subject data
+
+# Subject API here I have write the code where I can --> get , post , put , patch (update) and delete my subject data
 class SubjectAPI(APIView):
-    def get(self , request):
+    def get(self, request):
         subject = Subject.objects.all()
-        serializer = SubjectSerializer(subject , many=True)
+        serializer = SubjectSerializer(subject, many=True)
         return Response(serializer.data)
-    def post(self , request):
-        serializer = SubjectSerializer(data=request.data , many=True)
+
+    def post(self, request):
+        serializer = SubjectSerializer(data=request.data, many=True)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data , status=201)
-        return Response(serializer.errors , status=400)
-    
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)
+
+
 class SubjectDetailAPI(APIView):
-    def get(self , request, pk):
+    def get(self, request, pk):
         subject = get_object_or_404(Subject, pk=pk)
         serializer = SubjectSerializer(subject)
         return Response(serializer.data)
-    def put(self , request, pk):
-        subject = get_object_or_404(Subject , pk=pk)
-        serializer = SubjectSerializer(subject ,data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response({'message':'Subject Updated Successfully!','data':serializer.data}, status=status.HTTP_200_OK)
-        return Response({'message':'Bad Request!'}, status=status.HTTP_400_BAD_REQUEST)
-    def patch(self, request,pk):
+
+    def put(self, request, pk):
         subject = get_object_or_404(Subject, pk=pk)
-        serializer = SubjectSerializer(subject, data=request.data , partial=True)
+        serializer = SubjectSerializer(subject, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response({'message':'Subject Partial Updated Successfully!','data':serializer.data},status=status.HTTP_200_OK)
-        return Response({'message':'Bad Request'},status=status.HTTP_400_BAD_REQUEST)
-    def delete(self,request,pk):
-        subject = get_object_or_404(Subject , pk=pk)
+            return Response(
+                {"message": "Subject Updated Successfully!", "data": serializer.data},
+                status=status.HTTP_200_OK,
+            )
+        return Response({"message": "Bad Request!"}, status=status.HTTP_400_BAD_REQUEST)
+
+    def patch(self, request, pk):
+        subject = get_object_or_404(Subject, pk=pk)
+        serializer = SubjectSerializer(subject, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(
+                {
+                    "message": "Subject Partial Updated Successfully!",
+                    "data": serializer.data,
+                },
+                status=status.HTTP_200_OK,
+            )
+        return Response({"message": "Bad Request"}, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk):
+        subject = get_object_or_404(Subject, pk=pk)
         subject.delete()
-        return Response({'message':'Subject Data Deleted Successfully'},status=status.HTTP_204_NO_CONTENT)
-    
-#Now making School api where I am going to make some API's so lets do it
+        return Response(
+            {"message": "Subject Data Deleted Successfully"},
+            status=status.HTTP_204_NO_CONTENT,
+        )
+
+
+# Now making School api where I am going to make some API's so lets do it
+
 
 class SchoolAPI(APIView):
-    def get(self , request):
+    def get(self, request):
         school = School.objects.all()
         serializer = SchoolSerializer(school, many=True)
         return Response(serializer.data)
-    def post(self , request):
+
+    def post(self, request):
         serializer = SchoolSerializer(data=request.data, many=True)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data , status=201)
-        return Response(serializer.errors , status=400)
-    
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)
+
+
 class SchoolDetailAPI(APIView):
-    def get(self , request ,pk):
-        school = get_object_or_404(School , pk=pk)
+    def get(self, request, pk):
+        school = get_object_or_404(School, pk=pk)
         serializer = SchoolSerializer(school)
         return Response(serializer.data)
-    #Put method will update the all field of school data we cannot update a single field in put method
-    def put(self , request , pk):
-        school = get_object_or_404(School , pk=pk)
-        serializer = SchoolSerializer(school , data=request.data)
+
+    # Put method will update the all field of school data we cannot update a single field in put method
+    def put(self, request, pk):
+        school = get_object_or_404(School, pk=pk)
+        serializer = SchoolSerializer(school, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response({'message':'School Updated Successfully', 'data':serializer.data},status=status.HTTP_200_OK)
-        return Response({'message':'Bad Request'},status=status.HTTP_400_BAD_REQUEST)
-    #Patch method helps us to update single field of data.
-    def patch(self , request ,pk):
-        school = get_object_or_404(School , pk=pk)
-        serializer = SchoolSerializer(school , data=request.data , partial=True)
+            return Response(
+                {"message": "School Updated Successfully", "data": serializer.data},
+                status=status.HTTP_200_OK,
+            )
+        return Response({"message": "Bad Request"}, status=status.HTTP_400_BAD_REQUEST)
+
+    # Patch method helps us to update single field of data.
+    def patch(self, request, pk):
+        school = get_object_or_404(School, pk=pk)
+        serializer = SchoolSerializer(school, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
-            return Response({'message':'School Field Data Updated Successfully!','data':serializer.data},status=status.HTTP_200_OK)
-        return Response({'message':'Bad Request'},status=status.HTTP_400_BAD_REQUEST)
-    def delete(self , request, pk):
-        school = get_object_or_404(School , pk=pk)
+            return Response(
+                {
+                    "message": "School Field Data Updated Successfully!",
+                    "data": serializer.data,
+                },
+                status=status.HTTP_200_OK,
+            )
+        return Response({"message": "Bad Request"}, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk):
+        school = get_object_or_404(School, pk=pk)
         school.delete()
-        return Response({'message':'School Data Deleted Successfully!'},status=status.HTTP_204_NO_CONTENT)
+        return Response(
+            {"message": "School Data Deleted Successfully!"},
+            status=status.HTTP_204_NO_CONTENT,
+        )
