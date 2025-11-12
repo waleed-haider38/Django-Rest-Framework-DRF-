@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "django_browser_reload",
     "myapp",
     "item",
     "rest_framework",  # Added for DRF

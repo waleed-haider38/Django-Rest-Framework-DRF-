@@ -34,4 +34,5 @@ urlpatterns = [
     ),  # Added for DRF browsable API login
     path("item/", include("item.urls")),
     path("myapp/", include(router.urls)),
+    path("__reload__/", include("django_browser_reload.urls")),
 ]
